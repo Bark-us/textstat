@@ -19,14 +19,14 @@ class TextStats(object):
         self.rem_punct = rem_punct
         self.chars = self._char_count()
         if self.chars == 0:
-            raise Exception('Character count is zero')
+            raise TextStatsError('Character count is zero')
         self.lex = self._lexicon_count(self.text)
         if self.lex == 0:
-            raise Exception('Word count is zero')
+            raise TextStatsError('Word count is zero')
         self.syl = self._syllable_count(self.text)
         self.sent_count = self._sentence_count()
         if self.sent_count == 0:
-            raise Exception('Sentence count is zero')
+            raise TextStatsError('Sentence count is zero')
         self.asl = self._avg_sentence_length()
         self.aspw = self._avg_sentence_per_word()
         self.alpw = self._avg_letter_per_word()
@@ -274,3 +274,7 @@ class TextStats(object):
             return str(int(score)-1) + "th " + "and " + str(int(score)) + "th grade"
         else:
             return (int(score)-1, int(score))
+
+
+class TextStatsError(Exception):
+    '''Special error class for TextStats'''
